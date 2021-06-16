@@ -1,0 +1,23 @@
+server:
+  port: 9467
+spring:
+  application:
+    name: drugstore-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: drugstore-admin
+          uri: lb://drugstore-admin
+          predicates:
+            - Path=/drugstore-admin/**
+          filters:
+            - StripPrefix=1
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+feign:
+  okhttp:
+    enabled: true
+ribbon:
+  ConnectTimeout: 3000 #服务请求连接超时时间（毫秒）
+  ReadTimeout: 3000 #服务请求处理超时时间（毫秒）
